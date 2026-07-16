@@ -28,7 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>25</java.version>
-		<shardingsphere.version>5.5.0</shardingsphere.version>
+		<shardingsphere.version>5.4.1</shardingsphere.version>
 	</properties>
 	<dependencies>
 		<dependency>
