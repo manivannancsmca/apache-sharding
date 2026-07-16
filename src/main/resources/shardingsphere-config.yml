@@ -1,0 +1,51 @@
+databaseName: sharding_db
+
+dataSources:
+  ds_shard1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3308/product_shard_1?useSSL=false&serverTimezone=UTC
+    username: appuser
+    password: apppassword
+  ds_shard2:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3309/product_shard_2?useSSL=false&serverTimezone=UTC
+    username: appuser
+    password: apppassword
+  ds_shard3:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3310/product_shard_3?useSSL=false&serverTimezone=UTC
+    username: appuser
+    password: apppassword
+  ds_shard4:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3311/product_shard_4?useSSL=false&serverTimezone=UTC
+    username: appuser
+    password: apppassword
+  ds_shard5:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3312/product_shard_5?useSSL=false&serverTimezone=UTC
+    username: appuser
+    password: apppassword
+
+rules:
+- !SHARDING
+  tables:
+    products:
+      # 5 டேட்டாபேஸ்களிலும் products டேபிள் உள்ளதைக் குறிக்கிறது
+      actualDataNodes: ds_shard${1..5}.products
+      
+      databaseStrategy:
+        standard:
+          shardingColumn: product_id
+          shardingAlgorithmName: inline_mod_algorithm
+
+  shardingAlgorithms:
+    inline_mod_algorithm:
+      type: HASH_MOD
+      props:
+        sharding-count: 5 # 5 ஷார்ட்டுகள் உள்ளதால் மாடுலோ 5 கணக்கிடப்படும்
