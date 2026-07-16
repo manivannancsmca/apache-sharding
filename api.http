@@ -1,0 +1,33 @@
+### 1. (Create Product - Shard Test 1)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "iPhone 15 Pro",
+  "brand": "Apple",
+  "price": 999.99
+}
+
+###
+
+### 2. (Create Product - Shard Test 2)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "Galaxy S24 Ultra",
+  "brand": "Samsung",
+  "price": 1199.50
+}
+
+###
+
+### 3. (Cross-Shard Query Test)
+GET http://localhost:8080/api/products
+Accept: application/json
+
+###
+
+### 4. (Single Shard Query Test)
+GET http://localhost:8080/api/products/c6b4d5a2-3f8e-4b91-8d2c-7a5e9f1a0b3c
+Accept: application/json
