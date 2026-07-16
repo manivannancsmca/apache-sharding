@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  db_shard1: &mysql-base
+    image: mysql:8.0
+    container_name: mysql_shard_1
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: product_shard_1
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
+    ports:
+      - "3308:3306"
+    volumes:
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.d/shard.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
+      timeout: 5s
+      retries: 10
+      interval: 3s
+    networks:
+      - sharding-network
+
+  db_shard2:
+    <<: *mysql-base
+    container_name: mysql_shard_2
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: product_shard_2
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
+    ports:
+      - "3309:3306"
+    volumes:
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.d/shard.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
+      timeout: 5s
+      retries: 10
+      interval: 3s
+    networks:
+      - sharding-network
+
+  db_shard3:
+    <<: *mysql-base
+    container_name: mysql_shard_3
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: product_shard_3
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
+    ports:
+      - "3310:3306"
+    volumes:
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.d/shard.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
+      timeout: 5s
+      retries: 10
+      interval: 3s
+    networks:
+      - sharding-network
+
+  db_shard4:
+    <<: *mysql-base
+    container_name: mysql_shard_4
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: product_shard_4
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
+    ports:
+      - "3311:3306"
+    volumes:
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.d/shard.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
+      timeout: 5s
+      retries: 10
+      interval: 3s
+    networks:
+      - sharding-network
+
+  db_shard5:
+    <<: *mysql-base
+    container_name: mysql_shard_5
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: product_shard_5
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
+    ports:
+      - "3312:3306"
+    volumes:
+      - ./init-sql/shard.sql:/docker-entrypoint-initdb.d/shard.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uappuser", "-papppassword"]
+      timeout: 5s
+      retries: 10
+      interval: 3s
+    networks:
+      - sharding-network
+
+networks:
+  sharding-network:
+    driver: bridge
